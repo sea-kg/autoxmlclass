@@ -1,1 +1,17 @@
-sudo cp -R php_xmlclass/* /var/www/xmlclass
+
+if [ -d "autoxmlclass.git" ]; then
+   git clone https://github.com/sea-kg/autoxmlclass.git autoxmlclass.git
+fi
+
+if [ ! -d "autoxmlclass.git" ]; then
+  cd "autoxmlclass.git"
+  git checkout .
+  git pull
+  cd ..
+fi
+
+# update php
+if [ -d "autoxmlclass.git/update.sh" ]; then
+  cd "autoxmlclass.git"
+  ./update.sh
+fi
