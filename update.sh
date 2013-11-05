@@ -1,1 +1,1 @@
-sudo cp -R php_xmlclass/* /var/www/xmlclass
+cp -R php_xmlclass/* /var/www/xmlclass
