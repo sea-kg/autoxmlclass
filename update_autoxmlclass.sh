@@ -10,7 +10,7 @@ if [ -d "autoxmlclass.git" ]; then
 fi
 
 # update php
-if [ -d "autoxmlclass.git/update.sh" ]; then
+if [ -f "autoxmlclass.git/update.sh" ]; then
    cd autoxmlclass.git
    ./update.sh
 fi
