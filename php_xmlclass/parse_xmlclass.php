@@ -115,13 +115,14 @@ class Element
 	function write($elements)
 	{
 	
-	};
+	}
 };
 
-function parse_xmlclass($elements, $xml, $root = true, $ident = "")
+function parse_xmlclass($elements, $xml, $namespaces, $root = true, $ident = "")
 {
 	$obj = "";
 	$xmlName = $xml->getName();
+	// echo "[".$xmlName."]";
 	if(isset($elements[$xmlName]))
 	  $obj = $elements[$xmlName];
 	else
@@ -152,8 +153,19 @@ function parse_xmlclass($elements, $xml, $root = true, $ident = "")
 	foreach($xml->children() as $child)
 	{
 		// $obj->addSubElement($child->getName());
-		$elements = parse_xmlclass($elements, $child, false, $ident."\t");
+		$elements = parse_xmlclass($elements, $child, $namespaces, false, $ident."\t");
 		// $elements = parse_xmlclass($child, false, $ident."\t");
+	}
+		
+	
+	foreach($namespaces as $name_ns => $url_ns )
+	{
+		foreach($xml->children($url_ns) as $child)
+		{
+			// $obj->addSubElement($child->getName());
+			$elements = parse_xmlclass($elements, $child, $namespaces, false, $ident."\t");
+			// $elements = parse_xmlclass($child, false, $ident."\t");
+		}
 	}
 	// echo $ident."} ";
 	

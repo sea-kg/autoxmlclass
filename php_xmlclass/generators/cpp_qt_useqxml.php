@@ -149,7 +149,7 @@
 
 function get_header($elements, $output_filename)
 {
-	$temp_h = copyright()."
+	$temp_h = copyright_cpp()."
 
 #ifndef _".$output_filename."_h
 #define _".$output_filename."_h
@@ -244,7 +244,7 @@ $temp_h .= "
 
 function get_source($elements, $output_filename)
 {
-	$temp_cpp = copyright()."
+	$temp_cpp = copyright_cpp()."
 #include \"".$output_filename.".h\"
 
 namespace ".$output_filename." {
@@ -389,16 +389,16 @@ $temp_cpp .= "
 		// $xml->getNamespace();
 		// echo 'XML: <pre>'.htmlspecialchars(file_get_contents($xmlfile)).'</pre>Source code:';
 		$xml = simplexml_load_string($data_xml);
-		
+		$namespaces = $xml->getNamespaces(true);
+
 		$elements = array();
-		$elements = parse_xmlclass($elements, $xml);
+		$elements = parse_xmlclass($elements, $xml, $namespaces);
 
 		$files[$output_filename.'.h'] = get_header($elements, $output_filename);
 		$files[$output_filename.'.cpp'] = get_source($elements, $output_filename);
 		
 		// parse_xmlclass($xml);
-		// print_source($elements);
-	
+		// print_source($elements);	
 		return $files;
 	};
 ?>

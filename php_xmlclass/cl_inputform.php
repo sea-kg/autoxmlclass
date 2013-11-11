@@ -119,7 +119,7 @@ echo
 			if(isset($_POST['output_filename']) && strlen($_POST['output_filename']) > 0 )
 				$output_filename = basename($_POST['output_filename']);
 					
-      include_once("parse_xmlclass.php");
+			include_once("parse_xmlclass.php");
 			include_once($this->langs[$_POST['output_lang']]['include_file']);
 			$this->code = generateFiles($this->inputData, $output_filename);
 			
