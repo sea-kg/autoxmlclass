@@ -5,7 +5,7 @@ function copyright_cpp()
 	return 
 "
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * autoxmlclass © 2013 sea-kg (mrseakg@gmail.com)          *
+ * autoxmlclass © 2013-2015 sea-kg (mrseakg@gmail.com)          *
  * source code of autoxmlclass:                            *
  *        https://github.com/sea-kg/autoxmlclass/          *
  *                                                         * 
@@ -149,7 +149,7 @@ function parse_xmlclass($elements, $xml, $namespaces, $root = true, $ident = "")
 
 	foreach($xml->children() as $child)	
 		$obj->addSubElement($child->getName());	
-	
+
 	foreach($xml->children() as $child)
 	{
 		// $obj->addSubElement($child->getName());
