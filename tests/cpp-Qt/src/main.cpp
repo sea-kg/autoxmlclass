@@ -4,7 +4,7 @@
 #include <QDateTime>
 #include <iostream>
 
-#include "seakgObject.h"
+#include "testObject.h"
 
 
 // ---------------------------------------------------------------------------
@@ -24,7 +24,7 @@ int main(int argc, char *argv[] )
 		return -2;
 	};
 
-	seakgObject::_Object *root = seakgObject::readFromXML(filename);
+	testObject::_Object *root = testObject::readFromXML(filename);
 
 	if(root == NULL)
 	{

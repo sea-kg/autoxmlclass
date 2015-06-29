@@ -1,19 +1,19 @@
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * autoxmlclass Â© 2013 sea-kg (mrseakg@gmail.com)          *
+ * autoxmlclass © 2013 sea-kg (mrseakg@gmail.com)          *
  * source code of autoxmlclass:                            *
  *        https://github.com/sea-kg/autoxmlclass/          *
  *                                                         * 
  * Attention:                                              *
  *  It's code was generated on server:                     *
- *        http://localhost/xmlclass/index.php
+ *        http://localhost/autoxmlclass/index.php
  *  and please NOT CHANGING this code!!!                   *
  *                                                         *  
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "seakgObject.h"
+#include "testObject.h"
 
-namespace seakgObject {
+namespace testObject {
 	
 
 	//-------------------------------
@@ -234,4 +234,4 @@ namespace seakgObject {
 		return root;
 	};
 
-} // namespace seakgObject
+} // namespace testObject

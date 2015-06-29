@@ -3,4 +3,4 @@ autoxmlclass
 
 autoxmlclass
 
-this application will be analize xml-file and generate classes, serializers and deserializers for different languages
+this web-application (php) will be analize xml-file and generate classes, serializers and deserializers for different languages

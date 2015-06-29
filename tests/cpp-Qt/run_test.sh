@@ -6,12 +6,13 @@
 # lang=cpp_qt_useqxml
 # outputtype=zipfile
 # outputfilename='autocode'
+#	-o temp.txt
 
-#	-o temp.txt \
+URL="http://localhost/autoxmlclass/index.php"
 
 echo ">>>>>>> start test <<<<<<<<";
 
-FILENAME_XML=`pwd`"/object.xml"
+FILENAME_XML=`pwd`"/../object.xml"
 
 echo "+++++++ fullpath to xmlfile: "
 echo "    " $FILENAME_XML
@@ -30,10 +31,10 @@ curl -X POST \
 	-o src/temp.zip \
 	-F xml_input=fromfile \
 	-F data_xml=@$FILENAME_XML \
-	-F output_filename=seakgObject \
+	-F output_filename=testObject \
 	-F output_lang=cpp_qt_useqxml \
 	-F output_type=zipfile \
-	"http://localhost/xmlclass/index.php"
+	$URL
 
 echo "------- end download sources -------";
 
@@ -44,12 +45,12 @@ echo "";
 echo "+++++ unpack zipfile: "
 cd src
 
-if [ -f seakgObject.h ]; then 
-	rm seakgObject.h 
+if [ -f testObject.h ]; then 
+	rm testObject.h 
 fi
 
-if [ -f seakgObject.cpp ]; then 
-	rm seakgObject.cpp 
+if [ -f testObject.cpp ]; then 
+	rm testObject.cpp 
 fi
 
 unzip temp.zip
@@ -62,11 +63,11 @@ echo "";
 
 echo "------- start compile -------";
 
-if [ -f php_xmlclass_test ]; then 
-	rm php_xmlclass_test 
+if [ -f autoxmlclass ]; then 
+	rm autoxmlclass
 fi
 
-qmake php_xmlclass_test.pro
+qmake autoxmlclass.pro
 make
 
 echo "------- end compile -------";
@@ -76,24 +77,9 @@ echo "";
 echo "";
 echo "------- start program -------";
 
-if [ -f php_xmlclass_test ]; then 
-  ./php_xmlclass_test object.xml	
+if [ -f autoxmlclass ]; then 
+  ./autoxmlclass ../object.xml	
 fi
 
 echo "------- end program -------";
 echo ">>>>>>> end test <<<<<<<<";
-
-
-#	 \
-# 
-
-# SOURCE_FOLDER="../proj/src/"
-
-# cp temp/* $SOURCE_FOLDER
-
-
-
-
-# curl -o src.zip -X POST -d "data_xml@test.xml" http://localhost/xmlclass/index.php
-
-

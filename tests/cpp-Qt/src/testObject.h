@@ -1,19 +1,19 @@
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * autoxmlclass Â© 2013 sea-kg (mrseakg@gmail.com)          *
+ * autoxmlclass © 2013 sea-kg (mrseakg@gmail.com)          *
  * source code of autoxmlclass:                            *
  *        https://github.com/sea-kg/autoxmlclass/          *
  *                                                         * 
  * Attention:                                              *
  *  It's code was generated on server:                     *
- *        http://localhost/xmlclass/index.php
+ *        http://localhost/autoxmlclass/index.php
  *  and please NOT CHANGING this code!!!                   *
  *                                                         *  
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
-#ifndef _seakgObject_h
-#define _seakgObject_h
+#ifndef _testObject_h
+#define _testObject_h
 
 #include <QFile>
 #include <QStack>
@@ -23,7 +23,7 @@
 #include <QXmlStreamReader>
 #include <QTextStream>
 
-namespace seakgObject {
+namespace testObject {
 
 	class _SQLSelect;
 	class _Field;
@@ -110,6 +110,6 @@ namespace seakgObject {
 
 	_Object * readFromXML(QString fileXml);
 	
-} // namespace seakgObject
+} // namespace testObject
 
-#endif // _seakgObject_h
+#endif // _testObject_h
