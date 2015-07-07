@@ -122,8 +122,8 @@ echo
 			include_once("parse_xmlclass.php");
 			include_once($this->langs[$_POST['output_lang']]['include_file']);
 			$this->code = generateFiles($this->inputData, $output_filename);
-			
-			if($_POST['output_type'] == 'zipfile')
+
+			if ($_POST['output_type'] == 'zipfile')
 			{
 				$zipname = tempnam("/tmp", "axf");
 				$zip = new ZipArchive();
