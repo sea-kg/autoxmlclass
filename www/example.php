@@ -17,8 +17,9 @@
 			<td>Select language:</td>
 			<td><select name="output_lang">
 				<?php
+					$lang = isset($_GET['output_lang']) ? $_GET['output_lang'] : '';
 					foreach ($config['langs'] as $key => $value) {
-						echo '<option value="'.$key.'">'.$value['name'].'</option>';
+						echo '<option value="'.$key.'" '.($lang == $key ? 'selected="true"' : '').'>'.$value['name'].'</option>'."\r\n";
 					}
 				?>
 				</select>
@@ -52,6 +53,21 @@
 <pre>
 <?php
 	$analizer->printElements();
+?>
+</pre>
+
+<center><h1>Source code for <?php echo $config['langs'][$lang]['name']; ?> </h1></center>
+<pre>
+<?php
+	include_once($config['langs'][$lang]['include_file']);
+	$cg = new CodeGenerator();
+	$cg->generate($analizer->elements);
+	
+	foreach($cg->files as $filename => $content) {
+		echo '<h1>'.$filename.'</h1>';
+		echo htmlspecialchars($content);
+	}
+	
 ?>
 </pre>
 

@@ -20,9 +20,9 @@
 	$config['langs']['python_usexml']['name'] = 'Python (todo)';
 	$config['langs']['python_usexml']['include_file'] = 'generators/python_usexml.php';
 	
-	$config['langs']['php_usexml'] = Array();
-	$config['langs']['php_usexml']['name'] = 'PHP 5 (todo)';
-	$config['langs']['php_usexml']['include_file'] = 'generators/php_usexml.php';
+	$config['langs']['php_simplexml'] = Array();
+	$config['langs']['php_simplexml']['name'] = 'PHP 5 (use simple xml)';
+	$config['langs']['php_simplexml']['include_file'] = 'generators/php5_simplexml.php';
 	
 	$config['langs']['csharp_usexml'] = Array();
 	$config['langs']['csharp_usexml']['name'] = 'C# (todo)';
