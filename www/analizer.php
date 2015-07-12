@@ -20,12 +20,6 @@ class Element
 	}
 	
 	// ------------------------
-		
-	function classname() {
-		return "_".$this->name;
-	}
-
-	// ------------------------
 	
 	function reset()
 	{
@@ -46,14 +40,15 @@ class Element
 			else if($elemval > 1)
 				$this->elems[$elemname] = 2;
 		};
-		/*foreach($this->attr as $attrname)
-			$this->attr[$attrname] = 0;*/
 	}
 	
 	// ------------------------
 	
 	function merge($elem)
 	{
+		if (!$this->body && $elem->body)
+			$this->body = true;
+		
 		foreach($elem->elems as $name => $val)
 		{
 			if(isset($this->elems[$name]))
@@ -139,6 +134,7 @@ class Analizer {
 		$obj = "";
 		$xmlName = $xml->getName();
 		// echo "[".$xmlName."]";
+		$tmp = new Element();
 		if(isset($this->elements[$xmlName]))
 		  $obj = $this->elements[$xmlName];
 		else {
@@ -147,23 +143,24 @@ class Analizer {
 			$this->elements[$xmlName] = $obj;
 		}
 
-		$obj->reset();
+		$tmp->reset();
 		
+		// todo redesign this
 		if($xml->children()->count() == 0) {
-			$obj->setBody(true);
+			$tmp->setBody(true);
 		}
 		
 		// $attrs = new Element();
 		if($xml->attributes()->count() > 0) {
 			foreach($xml->attributes() as $attrname => $attrvalue) {
 				// todo
-				$obj->addAttributeName($attrname);
+				$tmp->addAttributeName($attrname);
 				// echo "\t\tQString ".$attrname.";\n"; // ."; // default value = $attrvalue \n";
 			}
 		}
 
 		foreach($xml->children() as $child)	{
-			$obj->addSubElement($child->getName());
+			$tmp->addSubElement($child->getName());
 		}
 
 		foreach($xml->children() as $child)
@@ -187,6 +184,6 @@ class Analizer {
 		
 		// $obj->reset();
 		// $elements[$obj->name()]->reset();
-		$this->elements[$obj->name()]->merge($obj);
+		$this->elements[$obj->name()]->merge($tmp);
 	}
 }
