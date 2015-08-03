@@ -175,8 +175,7 @@ function parse_xmlclass($elements, $xml, $namespaces, $root = true, $ident = "")
 	
 	// if(!$root) echo $xml->getName().";\n"; else echo ";\n</pre>";
 
-	if($root)
-	{
+	if($root) {
 	   //var_dump($elements);
 	}
 	return $elements;

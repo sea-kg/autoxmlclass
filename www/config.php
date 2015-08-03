@@ -28,3 +28,14 @@
 	$config['langs']['csharp_usexml']['name'] = 'C# (todo)';
 	$config['langs']['csharp_usexml']['include_file'] = 'generators/csharp_usexml.php';
 	
+
+function copyright_cpp()
+{
+	return "
+// autoxmlclass © 2013-2015 sea-kg (mrseakg@gmail.com)
+// open source code: https://github.com/sea-kg/autoxmlclass/
+// Attention:
+//     This file was automaticly generate on http://".$_SERVER["SERVER_NAME"].$_SERVER["PHP_SELF"]."
+// ".date("Y M d H:i")."
+";
+}

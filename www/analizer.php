@@ -104,25 +104,27 @@ class Analizer {
 	var $elements = Array();
 	var $namespaces = Array();
 	
-	function printElements() {
+	function getElements() {
+		$result = "";
 		foreach($this->elements as $elemname => $elem) {
-			echo "\r\n";
-			echo "Element:\r\n";
-			echo "\tName: '".$elem->name."'\r\n";
-			echo "\tBody: '".($elem->body ? 'true' : 'false')."'\r\n";
-			echo "\tAttributes:\r\n";
+			$result .= "\r\n";
+			$result .= "Element:\r\n";
+			$result .= "\tName: '".$elem->name."'\r\n";
+			$result .= "\tBody: '".($elem->body ? 'true' : 'false')."'\r\n";
+			$result .= "\tAttributes:\r\n";
 			foreach($elem->attr as $attrname => $attr) {
-				echo "\t\t".$attrname.": ".$attr."\r\n";
+				$result .= "\t\t".$attrname.": ".$attr."\r\n";
 			}
-			echo "\tElements:\r\n";
+			$result .= "\tElements:\r\n";
 			foreach($elem->elems as $childname => $childs) {
-				echo "\t\t".$childname.": ".$childs."\r\n";
+				$result .= "\t\t".$childname.": ".$childs."\r\n";
 			}
-			/*echo "\tDep:\r\n";
+			/*$result .= "\tDep:\r\n";
 			foreach($elem->dep as $childname => $childs) {
-				echo "\t\t".$childname.": ".$childs."\r\n";
+				$result .= "\t\t".$childname.": ".$childs."\r\n";
 			}*/
 		}
+		return $result;
 	}
 	
 	function parse_string($data_xml) {

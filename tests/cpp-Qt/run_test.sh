@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # xml_input=fromfile
 # data_xml=filename == text.xml
 # lang=cpp_qt_useqxml
@@ -12,7 +11,7 @@ URL="http://localhost/autoxmlclass/index.php"
 
 echo ">>>>>>> start test <<<<<<<<";
 
-FILENAME_XML=`pwd`"/../object.xml"
+FILENAME_XML=`pwd`"/../example.xml"
 
 echo "+++++++ fullpath to xmlfile: "
 echo "    " $FILENAME_XML
@@ -25,18 +24,25 @@ echo "";
 echo "";
 echo "";
 
-echo "------- start download sources -------";
+echo -n "Download sources ... ";
 
 curl -X POST \
+	--no-progress-bar \
 	-o src/temp.zip \
 	-F xml_input=fromfile \
 	-F data_xml=@$FILENAME_XML \
 	-F output_filename=testObject \
 	-F output_lang=cpp_qt_useqxml \
 	-F output_type=zipfile \
-	$URL
+	$URL > /dev/null
 
-echo "------- end download sources -------";
+if [ ! -f src/temp.zip ]; then
+	echo "[FAIL]"
+	exit
+fi
+echo "[OK]";
+
+exit;
 
 echo "";
 echo "";
@@ -57,8 +63,6 @@ unzip temp.zip
 rm temp.zip
 cd ..
 
-echo "";
-echo "";
 echo "";
 
 echo "------- start compile -------";

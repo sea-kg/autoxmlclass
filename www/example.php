@@ -52,7 +52,10 @@
 <center><h1>analizer-report.txt</h1></center>
 <pre>
 <?php
-	$analizer->printElements();
+	echo $analizer->getElements();
+	$namespace = isset($_GET['namespace']) ? $_GET['namespace'] : 'example';
+	$lang = isset($_GET['output_lang']) ? $_GET['output_lang'] : 'cpp_qt_useqxml';
+	
 ?>
 </pre>
 
@@ -61,8 +64,8 @@
 <?php
 	include_once($config['langs'][$lang]['include_file']);
 	$cg = new CodeGenerator();
-	$cg->generate($analizer->elements);
-	
+	$cg->generate($analizer->elements, $namespace);
+
 	foreach($cg->files as $filename => $content) {
 		echo '<h1>'.$filename.'</h1>';
 		echo htmlspecialchars($content);

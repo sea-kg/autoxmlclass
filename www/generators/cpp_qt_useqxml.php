@@ -401,4 +401,133 @@ $temp_cpp .= "
 		// print_source($elements);	
 		return $files;
 	};
-?>
+	
+	
+class CodeGenerator {
+	var $files = array();
+	function generate($elements, $namespace) {
+		
+		$source_file = "";
+		$source_file .= "// Namespace: ".$namespace."\r\n";
+		$source_file .= "// File: ".$namespace.".cpp\r\n";
+		$source_file .= copyright_cpp()."\r\n";
+		$source_file .= "namespace ".$namespace." {\r\n";
+		
+		$header_file = "";
+		$header_file .= "// Namespace: ".$namespace."\r\n";
+		$header_file .= "// File: ".$namespace.".h\r\n";
+		$header_file .= copyright_cpp()."\r\n\r\n";
+		$header_file .= "#include<QString>\r\n";
+		$header_file .= "#include<QVector>\r\n\r\n";
+		$header_file .= "namespace ".$namespace." {\r\n\r\n";
+
+		// declaration classes
+		foreach($elements as $var => $elem) {
+			$header_file .= "class ".$elem->name.";\r\n";
+		}
+		$header_file .= "\r\n";
+		
+		// declaration methods in classes
+		foreach($elements as $var => $elem) {
+			$header_file .= "class ".$elem->name." {\r\n";
+			
+			
+			$header_file .= "\t// generate members attribute\r\n";
+			$header_file .= "\tprivate:\r\n";
+			foreach($elem->attr as $attrname => $attrval)
+			{
+				if ($attrval == 1) {
+					$header_file .= "\t\tQString m_s".$attrname.";\r\n";
+				} else {
+					// impossible attribute count
+					$header_file .= " //Error: impossible attribute count: ".$attrname."\r\n";
+				}
+			};
+			$header_file .= "\r\n";
+
+			$header_file .= "\t// generate members for elements\r\n";
+			$header_file .= "\tprivate:\r\n";
+			foreach($elem->elems as $subelemname => $subelemval)
+			{
+				if ($subelemval == 1) {
+					$header_file .= "\t\t".$namespace."::".$subelemname." *m_p".$subelemname.";\r\n";
+				} else {
+					// impossible attribute count
+					$header_file .= "\t\tQVector<".$namespace."::".$subelemname." *> m_v".$subelemname.";\r\n";
+				}
+			};
+			$header_file .= "\r\n";
+
+			
+			$header_file .= "\t// generate methods for attribute\r\n";
+			$header_file .= "\tpublic:\r\n";
+			foreach($elem->attr as $attrname => $attrval)
+			{
+				if ($attrval == 1) {
+					$header_file .= "\t\tvoid set".$attrname."(const QString &newval);\r\n";
+					$header_file .= "\t\tQString get".$attrname."();\r\n";
+					
+					// source code
+					$source_file .= "\r\n// ------------------------------------------------------------\r\n\r\n";
+					$source_file .= "void ".$elem->name."::set".$attrname."(const QString &newval) { \r\n";
+					$source_file .= "\tm_s".$attrname." = newval;\r\n";
+					$source_file .= "}\r\n";
+					$source_file .= "\r\n// ------------------------------------------------------------\r\n\r\n";
+					$source_file .= "QString ".$elem->name."::get".$attrname."() { \r\n";
+					$source_file .= "\treturn m_s".$attrname.";\r\n";
+					$source_file .= "}\r\n";
+				} else {
+					// impossible attribute count
+					$header_file .= "\t\t//Error: impossible attribute count: ".$attrname."\r\n";
+				}
+			};
+			$header_file .= "\r\n";
+
+			
+			$header_file .= "\t// generate methods for elements\r\n";
+			$header_file .= "\tpublic:\r\n";
+			foreach($elem->elems as $subelemname => $subelemval)
+			{
+				if ($subelemval == 1) {
+					$header_file .= "\t\tvoid set".$subelemname."(".$subelemname." *pNewval);\r\n";
+					$header_file .= "\t\t".$subelemname." * get".$subelemname."();\r\n";
+					
+					// source code
+					$source_file .= "\r\n// ------------------------------------------------------------\r\n\r\n";
+					$source_file .= "void ".$elem->name."::set".$subelemname."(".$subelemname." *pNewval) { \r\n";
+					$source_file .= "\tm_p".$subelemname." = pNewval;\r\n";
+					$source_file .= "}\r\n";
+					$source_file .= "\r\n// ------------------------------------------------------------\r\n\r\n";
+					$source_file .= $subelemname." *".$elem->name."::get".$subelemname."() { \r\n";
+					$source_file .= "\treturn m_p".$subelemname.";\r\n";
+					$source_file .= "}\r\n";
+					
+					// $header_file .= "\t\t".$namespace."::".$subelemname." *m_p".$subelemname.";\r\n";
+				} else {
+					
+					$header_file .= "\t\tvoid add".$subelemname."(".$subelemname." *pNewval);\r\n";
+					$header_file .= "\t\tQVector<".$subelemname." *> &getVector".$subelemname."();\r\n";
+
+					// source code
+					$source_file .= "\r\n// ------------------------------------------------------------\r\n\r\n";
+					$source_file .= "void ".$elem->name."::add".$subelemname."(".$subelemname." *pNewval) { \r\n";
+					$source_file .= "\tm_v".$subelemname.".push_back(pNewval);\r\n";
+					$source_file .= "}\r\n";
+					$source_file .= "\r\n// ------------------------------------------------------------\r\n\r\n";
+					$source_file .= "QVector<".$subelemname."*> &".$elem->name."::getVector".$subelemname."() { \r\n";
+					$source_file .= "\treturn m_v".$subelemname.";\r\n";
+					$source_file .= "}\r\n";					
+				}
+			};
+			$header_file .= "\r\n";
+			
+			$header_file .= "}; // class ".$elem->name."\r\n\r\n";
+		}
+		
+		$header_file .= "\r\n} // namespace ".$namespace."\r\n";
+		$source_file .= "\r\n} // namespace ".$namespace."\r\n";
+		$this->files[$namespace.'.h'] = $header_file;
+		$this->files[$namespace.'.cpp'] = $source_file;
+		return;
+	}
+}
