@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# URL="http://192.168.0.227/autoxmlclass/"
 URL="http://localhost/autoxmlclass/"
 
 # refresh example.xml

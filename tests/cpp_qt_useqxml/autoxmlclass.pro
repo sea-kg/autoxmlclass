@@ -6,9 +6,9 @@ MOC_DIR = tmp/
 
 SOURCES += \
 	src/main.cpp \
-	src/testObject.cpp
+	src/example.cpp
 
 HEADERS += \
-	src/testObject.h
+	src/example.h
 
 

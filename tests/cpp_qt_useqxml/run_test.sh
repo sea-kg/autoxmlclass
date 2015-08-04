@@ -7,83 +7,78 @@
 # outputfilename='autocode'
 #	-o temp.txt
 
-URL="http://localhost/autoxmlclass/index.php"
-
-echo ">>>>>>> start test <<<<<<<<";
-
+echo ""
+# URL="http://192.168.0.227/autoxmlclass/generate.php"
+URL="http://localhost/autoxmlclass/generate.php"
 FILENAME_XML=`pwd`"/../example.xml"
 
-echo "+++++++ fullpath to xmlfile: "
-echo "    " $FILENAME_XML
+echo "URL: " $URL
+echo "XML: " $FILENAME_XML
+echo "";
 
+# cleanup
+echo -n "Remove old zip file ... "
 if [ -f src/temp.zip ]; then
 	rm src/temp.zip
 fi
+echo "[OK]";
 
-echo "";
-echo "";
-echo "";
-
+# download
 echo -n "Download sources ... ";
-
 curl -X POST \
 	--no-progress-bar \
 	-o src/temp.zip \
-	-F xml_input=fromfile \
-	-F data_xml=@$FILENAME_XML \
-	-F output_filename=testObject \
+	-F input_xml=@$FILENAME_XML \
+	-F namespace=example \
 	-F output_lang=cpp_qt_useqxml \
-	-F output_type=zipfile \
-	$URL > /dev/null
-
+	$URL 2> /dev/null
 if [ ! -f src/temp.zip ]; then
 	echo "[FAIL]"
 	exit
 fi
 echo "[OK]";
 
-exit;
+# cleanup
+echo -n "Remove old source files ... "
+if [ -f src/example.h ]; then 
+	rm src/example.h 
+fi
 
-echo "";
-echo "";
-echo "";
+if [ -f src/example.cpp ]; then 
+	rm src/example.cpp 
+fi
+echo "[OK]";
 
-echo "+++++ unpack zipfile: "
+# unpack
+echo -n "Unpack zip-file ... "
 cd src
-
-if [ -f testObject.h ]; then 
-	rm testObject.h 
-fi
-
-if [ -f testObject.cpp ]; then 
-	rm testObject.cpp 
-fi
-
-unzip temp.zip
+unzip temp.zip > /dev/null
 rm temp.zip
 cd ..
+echo "[OK]";
 
-echo "";
 
-echo "------- start compile -------";
 
+echo -n "Cleanup binary 'autoxmlclass' ... "
 if [ -f autoxmlclass ]; then 
 	rm autoxmlclass
 fi
-
-qmake autoxmlclass.pro
-make
-
-echo "------- end compile -------";
-
-echo "";
-echo "";
-echo "";
-echo "------- start program -------";
-
-if [ -f autoxmlclass ]; then 
-  ./autoxmlclass ../object.xml	
+if [ -f Makefile ]; then 
+	rm Makefile
 fi
+echo "[OK]";
 
-echo "------- end program -------";
-echo ">>>>>>> end test <<<<<<<<";
+echo -n "Compile ... "
+qmake autoxmlclass.pro
+make > compile.log 2> error.log
+
+if [ ! -f autoxmlclass ]; then
+	echo "[FAIL]";
+	cat error.log
+	exit;
+fi
+echo "[OK]";
+
+echo -n "Run app ... "
+./autoxmlclass ../example.xml
+echo "[OK]";
