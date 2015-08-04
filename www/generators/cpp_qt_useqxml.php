@@ -430,8 +430,19 @@ class CodeGenerator {
 		// declaration methods in classes
 		foreach($elements as $var => $elem) {
 			$header_file .= "class ".$elem->name." {\r\n";
-			
-			
+
+			{
+				$header_file .= "\t// base methods\r\n";
+				$header_file .= "\tpublic:\r\n";
+				$header_file .= "\t\tQString nameOfElement();\r\n";
+				// source code
+				$source_file .= "\r\n// ------------------------------------------------------------\r\n\r\n";
+				$source_file .= "QString ".$elem->name."::nameOfElement() { \r\n";
+				$source_file .= "\t return \"".$elem->name."\";\r\n";
+				$source_file .= "}\r\n";
+			}
+			$header_file .= "\r\n";
+
 			$header_file .= "\t// generate members attribute\r\n";
 			$header_file .= "\tprivate:\r\n";
 			foreach($elem->attr as $attrname => $attrval)
@@ -458,7 +469,6 @@ class CodeGenerator {
 			};
 			$header_file .= "\r\n";
 
-			
 			$header_file .= "\t// generate methods for attribute\r\n";
 			$header_file .= "\tpublic:\r\n";
 			foreach($elem->attr as $attrname => $attrval)
@@ -520,7 +530,6 @@ class CodeGenerator {
 				}
 			};
 			$header_file .= "\r\n";
-			
 			$header_file .= "}; // class ".$elem->name."\r\n\r\n";
 		}
 		

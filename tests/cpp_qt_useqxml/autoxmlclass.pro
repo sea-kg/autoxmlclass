@@ -1,4 +1,14 @@
-TEMPLATE = app
-SOURCES += src/main.cpp src/testObject.cpp
+
 QT += xml core
-HEADERS += src/testObject.h
+TEMPLATE = app
+OBJECTS_DIR = tmp/
+MOC_DIR = tmp/
+
+SOURCES += \
+	src/main.cpp \
+	src/testObject.cpp
+
+HEADERS += \
+	src/testObject.h
+
+
