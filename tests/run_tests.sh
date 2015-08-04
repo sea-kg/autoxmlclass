@@ -8,6 +8,6 @@ if [ -f "example.xml" ]; then
 fi
 wget $URL/example.xml
 
-cd cpp-Qt
+cd cpp_qt_useqxml
 ./run_test.sh
 cd ..

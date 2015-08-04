@@ -1,6 +1,6 @@
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * autoxmlclass © 2013 sea-kg (mrseakg@gmail.com)          *
+ * autoxmlclass © 2013-2015 sea-kg (mrseakg@gmail.com)          *
  * source code of autoxmlclass:                            *
  *        https://github.com/sea-kg/autoxmlclass/          *
  *                                                         * 
@@ -28,6 +28,7 @@ namespace testObject {
 	class _SQLSelect;
 	class _Field;
 	class _Object;
+	class _Objects;
 
 	class _specXMLElement {
 		public:
@@ -73,9 +74,11 @@ namespace testObject {
 			// attributes 
 			QString name;
 			QString value;
+			QString Attr2;
 			QString id;
 			QString Attr1;
-			QString Attr2;
+			QString Attr4;
+			QString Attr3;
 			QString Attr5;
 
 			// elements
@@ -98,17 +101,40 @@ namespace testObject {
 
 			// attributes 
 			QString id;
+			QString date;
 
 			// elements
-			_Field * Field; 
+			QString Body;
+
+			QList<_Field *> Fields;
 			_SQLSelect * SQLSelect; 
+	};
+
+	//-------------------------------
+	
+	class _Objects : public _specXMLElement {
+		public:
+
+			// _specXMLElement
+			virtual QString nameOfElement();
+			virtual bool hasBody();
+			virtual bool setBody(QString body);
+			virtual bool setAttribute(QString name, QString value);
+			virtual bool addChildElement(QString name, _specXMLElement *);
+
+			// attributes 
+			QString date;
+			QString export;
+
+			// elements
+			QList<_Object *> Objects;
 	};
 
 	//-------------------------------
 	 
 	_specXMLElement * createElement(QString strName);
 
-	_Object * readFromXML(QString fileXml);
+	_Objects * readFromXML(QString fileXml);
 	
 } // namespace testObject
 

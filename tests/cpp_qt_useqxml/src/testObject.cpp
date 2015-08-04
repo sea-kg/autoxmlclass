@@ -1,6 +1,6 @@
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * autoxmlclass © 2013 sea-kg (mrseakg@gmail.com)          *
+ * autoxmlclass © 2013-2015 sea-kg (mrseakg@gmail.com)          *
  * source code of autoxmlclass:                            *
  *        https://github.com/sea-kg/autoxmlclass/          *
  *                                                         * 
@@ -80,12 +80,16 @@ namespace testObject {
 			name = value;
 		else if(name == "value")
 			value = value;
+		else if(name == "Attr2")
+			Attr2 = value;
 		else if(name == "id")
 			id = value;
 		else if(name == "Attr1")
 			Attr1 = value;
-		else if(name == "Attr2")
-			Attr2 = value;
+		else if(name == "Attr4")
+			Attr4 = value;
+		else if(name == "Attr3")
+			Attr3 = value;
 		else if(name == "Attr5")
 			Attr5 = value;
 		else
@@ -119,13 +123,14 @@ namespace testObject {
 	//-------------------------------
 
 	bool _Object::hasBody() {
-		return false;
+		return true;
 	};
 
 	//-------------------------------
 
-	bool _Object::setBody(QString /*body*/) {
-		 return false;
+	bool _Object::setBody(QString body) {
+		Body = body;
+		return true;
 	};
 
 	//-------------------------------
@@ -133,6 +138,8 @@ namespace testObject {
 	bool _Object::setAttribute(QString name, QString value) {
 		if(name == "id")
 			id = value;
+		else if(name == "date")
+			date = value;
 		else
 			return false;
 		return true;
@@ -142,10 +149,59 @@ namespace testObject {
 
 	bool _Object::addChildElement(QString strName, _specXMLElement *pElem) {
 		if(strName == "Field") {
-			Field = dynamic_cast<_Field *>(pElem);
+			_Object *p = dynamic_cast<_Field *>(pElem);
+			if(p == NULL) return false;
+			Fields << p;
 		}
 		else if(strName == "SQLSelect") {
 			SQLSelect = dynamic_cast<_SQLSelect *>(pElem);
+		}
+		else
+			return false;
+		return true;
+	};
+
+		
+	//-------------------------------
+
+
+	//-------------------------------
+
+	QString _Objects::nameOfElement() {
+		return "Objects";
+	};
+
+	//-------------------------------
+
+	bool _Objects::hasBody() {
+		return false;
+	};
+
+	//-------------------------------
+
+	bool _Objects::setBody(QString /*body*/) {
+		 return false;
+	};
+
+	//-------------------------------
+
+	bool _Objects::setAttribute(QString name, QString value) {
+		if(name == "date")
+			date = value;
+		else if(name == "export")
+			export = value;
+		else
+			return false;
+		return true;
+	}
+
+	//-------------------------------
+
+	bool _Objects::addChildElement(QString strName, _specXMLElement *pElem) {
+		if(strName == "Object") {
+			_Objects *p = dynamic_cast<_Object *>(pElem);
+			if(p == NULL) return false;
+			Objects << p;
 		}
 		else
 			return false;
@@ -161,14 +217,15 @@ namespace testObject {
 		if(strName == "SQLSelect") elem = new _SQLSelect();
 		if(strName == "Field") elem = new _Field();
 		if(strName == "Object") elem = new _Object();
+		if(strName == "Objects") elem = new _Objects();
 		return elem;
 	};
 	
 	//-------------------------------
 
 	
-	_Object * readFromXML(QString fileXml) {
-		_Object *root = NULL;
+	_Objects * readFromXML(QString fileXml) {
+		_Objects *root = NULL;
 
 		// init xml stream
 		QFile file(fileXml);
@@ -203,7 +260,7 @@ namespace testObject {
 				_specXMLElement *parentElem = (stackElements.count() != 0) ? stackElements.top() : NULL;
 
 				if(stackElements.count() == 0)
-					root = (_Object *)elem;
+					root = (_Objects *)elem;
 								
 				if(parentElem != NULL)
 					parentElem->addChildElement(strName,elem);
