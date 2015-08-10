@@ -8,8 +8,8 @@
 #	-o temp.txt
 
 echo ""
-# URL="http://192.168.0.227/autoxmlclass/generate.php"
-URL="http://localhost/autoxmlclass/generate.php"
+URL="http://192.168.0.227/autoxmlclass/generate.php"
+# URL="http://localhost/autoxmlclass/generate.php"
 FILENAME_XML=`pwd`"/../example.xml"
 
 echo "URL: " $URL
@@ -60,11 +60,14 @@ echo "[OK]";
 
 
 echo -n "Cleanup binary 'autoxmlclass' ... "
-if [ -f autoxmlclass ]; then 
+if [ -f autoxmlclass ]; then
 	rm autoxmlclass
 fi
-if [ -f Makefile ]; then 
+if [ -f Makefile ]; then
 	rm Makefile
+fi
+if [ -d tmp ]; then
+	rm -rf tmp
 fi
 echo "[OK]";
 

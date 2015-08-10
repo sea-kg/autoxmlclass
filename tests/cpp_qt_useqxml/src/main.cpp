@@ -1,10 +1,11 @@
 
 #include <QObject>
 #include <QMap>
+#include <QFile>
 #include <QDateTime>
 #include <iostream>
 
-#include "testObject.h"
+#include "example.h"
 
 
 // ---------------------------------------------------------------------------
@@ -24,17 +25,23 @@ int main(int argc, char *argv[] )
 		return -2;
 	};
 
-	testObject::_Object *root = testObject::readFromXML(filename);
-
+	example::Objects *pObjects = new example::Objects();
+	QFile file(filename);
+	if (pObjects->fromFile(file)) {
+		
+	}
+	
+	std::cout << pObjects->nameOfElement().toStdString() << std::endl;
+	
+	
+	/*
 	if(root == NULL)
 	{
 		std::cout << argv[1] << " - could not readed\r\n";	
 		return -3;
 	};
-	
-	
 	std::cout << "root->id = [" << root->id.toStdString() << "]\r\n";
-	
+	*/
 	std::cout << "\r\n";
 	return 0;
 };
